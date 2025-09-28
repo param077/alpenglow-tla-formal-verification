@@ -22,11 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Download TLA+ Toolbox
+      - name: Download and Install TLA+ Toolbox
         run: |
-          wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
-          tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
-          sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
+          wget https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/TLAToolbox-1.7.4.deb
+          sudo dpkg -i TLAToolbox-1.7.4.deb
+          sudo apt-get install -f  # To fix any missing dependencies
 
       - name: Run TLC on Votor spec
         continue-on-error: true
