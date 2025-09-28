@@ -23,5 +23,8 @@ jobs:
           java-version: '11'
 
       - name: Download TLA+ Toolbox
-        run: |
-          wget https://github.com/tlaplus/tlaplus/releases/download/v2
+  run: |
+    wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
+    tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
+    sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
+
