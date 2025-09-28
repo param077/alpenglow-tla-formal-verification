@@ -28,12 +28,14 @@ jobs:
 
       - name: Run TLC on Votor spec
         continue-on-error: true
+        working-directory: tla/votor
         run: |
           echo "Running TLC on MCVotor.tla with MCVotor.cfg"
-          java -cp tla2tools.jar tlc2.TLC tla/votor/MCVotor.tla -config tla/votor/MCVotor.cfg
+          java -cp ../../tla2tools.jar tlc2.TLC MCVotor.tla -config MCVotor.cfg
 
       - name: Run TLC on Rotor spec
         continue-on-error: true
+        working-directory: tla/rotor
         run: |
           echo "Running TLC on rotor.tla with rotor.cfg"
-          java -cp tla2tools.jar tlc2.TLC tla/rotor/rotor.tla -config tla/rotor/rotor.cfg
+          java -cp ../../tla2tools.jar tlc2.TLC rotor.tla -config rotor.cfg
