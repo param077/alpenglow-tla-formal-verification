@@ -1,5 +1,5 @@
 ---- MODULE MCVotor ----
-EXTENDS votor
+EXTENDS Votor
 
 \* Model constants - define complex values here
 MCStake == [n1 |-> 5, n2 |-> 3, n3 |-> 2, n4 |-> 1, n5 |-> 1] 
