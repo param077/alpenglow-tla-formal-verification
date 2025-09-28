@@ -30,7 +30,8 @@ jobs:
         continue-on-error: true
         run: |
           echo "Running TLC on votor.tla with votor.cfg"
-          java -cp tla2tools.jar tlc2.TLC tla/votor/votor.tla
+          java -cp tla2tools.jar tlc2.TLC tla/votor/votor.tla -config tla/votor/votor.cfg
+
 
       - name: Run TLC on Rotor spec
         continue-on-error: true
