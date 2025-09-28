@@ -26,11 +26,10 @@ jobs:
         run: |
           wget https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar -O tla2tools.jar
 
-      - name: Run TLC on Votor spec
-        continue-on-error: true
-        run: |
-          echo "Running TLC on votor.tla with votor.cfg"
-          java -cp tla2tools.jar tlc2.TLC tla/votor/votor.tla -config tla/votor/votor.cfg
+      - - name: Run TLC Model Checker
+  run: |
+    echo "Running TLC on MCVotor.tla with MCVotor.cfg"
+    tlc MCVotor.tla -config MCVotor.cfg
 
 
       - name: Run TLC on Rotor spec
