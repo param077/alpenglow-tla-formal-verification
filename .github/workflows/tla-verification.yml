@@ -16,10 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
+   - name: Set up Java
+     uses: actions/setup-java@v2
+     with:
+     distribution: 'temurin'
+     java-version: '11'
+
 
     - name: Download TLA+ Toolbox
       run: |
