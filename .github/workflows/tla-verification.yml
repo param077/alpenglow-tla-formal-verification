@@ -27,4 +27,13 @@ jobs:
           wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
           tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
           sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
-          sudo ln
+
+      - name: Run TLC on Votor spec
+        run: |
+          echo "Running TLC on votor.tla"
+          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/votor.tla
+
+      - name: Run TLC on Rotor spec
+        run: |
+          echo "Running TLC on rotor.tla"
+          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/rotor.tla
