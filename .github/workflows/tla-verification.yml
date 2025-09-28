@@ -24,4 +24,4 @@ jobs:
 
       - name: Download TLA+ Toolbox
         run: |
-          wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tla
+          wget https://github.com/tlaplus/tlaplus/releases/download/v2
