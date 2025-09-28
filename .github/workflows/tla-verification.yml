@@ -1,0 +1,37 @@
+name: TLA+ Verification
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Download TLA+ Toolbox
+      run: |
+        wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
+        tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
+        sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
+        sudo ln -s /opt/tlaplus/bin/tlaplus /usr/local/bin/tlaplus
+
+    - name: Run TLC on TLA+ specifications
+      run: |
+        for file in tla/*.tla; do
+          echo "Running TLC on $file"
+          tlaplus -toolbox -model-check -depth 10 -spec "$file"
+        done
+
