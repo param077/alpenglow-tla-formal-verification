@@ -22,20 +22,18 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Download and Install TLA+ Toolbox
+      - name: Download TLA+ CLI
         run: |
-          wget https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/TLAToolbox-1.7.4.deb
-          sudo dpkg -i TLAToolbox-1.7.4.deb
-          sudo apt-get install -f  # To fix any missing dependencies
+          wget https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar -O tla2tools.jar
 
       - name: Run TLC on Votor spec
         continue-on-error: true
         run: |
           echo "Running TLC on votor.tla with votor.cfg"
-          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/votor/votor.tla
+          java -cp tla2tools.jar tlc2.TLC tla/votor/votor.tla
 
       - name: Run TLC on Rotor spec
         continue-on-error: true
         run: |
           echo "Running TLC on rotor.tla with rotor.cfg"
-          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/rotor/rotor.tla
+          java -cp tla2tools.jar tlc2.TLC tla/rotor/rotor.tla
