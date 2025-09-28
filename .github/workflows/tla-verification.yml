@@ -23,8 +23,19 @@ jobs:
           java-version: '11'
 
       - name: Download TLA+ Toolbox
-  run: |
-    wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
-    tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
-    sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
+        run: |
+          wget https://github.com/tlaplus/tlaplus/releases/download/v2.17.0/tlaplus-2.17.0-linux-x86_64.tar.gz
+          tar -xzf tlaplus-2.17.0-linux-x86_64.tar.gz
+          sudo mv tlaplus-2.17.0-linux-x86_64 /opt/tlaplus
 
+      - name: Run TLC on Votor spec
+        continue-on-error: true
+        run: |
+          echo "Running TLC on votor.tla with votor.cfg"
+          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/votor/votor.tla
+
+      - name: Run TLC on Rotor spec
+        continue-on-error: true
+        run: |
+          echo "Running TLC on rotor.tla with rotor.cfg"
+          java -cp /opt/tlaplus/lib/* tlc2.TLC tla/rotor/rotor.tla
