@@ -8,7 +8,8 @@ CONSTANTS
   Nodes,       \* set of validator ids
   Stake,       \* function: Node -> Natural (stake units)
   THRESH80,    \* integer stake units for 80% threshold
-  THRESH60     \* integer stake units for 60% threshold
+  THRESH60,    \* integer stake units for 60% threshold
+  Slots        \* finite set of slots to explore
 
 (************************************************************************)
 (* simple summation helper (recursive) *)
@@ -30,8 +31,6 @@ VoteType == {"Notar", "NotarFallback", "Final", "Skip", "SkipFallback", "None"}
 (************************************************************************)
 (* STATE *)
 (************************************************************************)
-CONSTANT Slots   \* finite set of slots to explore
-
 VARIABLES
   votes,
   certs,
@@ -42,11 +41,18 @@ Init ==
   /\ certs = {}
   /\ pendingBlock = [s \in Slots |-> "NULL"]
 
-
 (************************************************************************)
 (* helper to compute stake for a set of nodes *)
 (************************************************************************)
 StakeOf(S) == Sum(Stake, S)
+
+(************************************************************************)
+(* New: Propose a block into a slot *)
+(************************************************************************)
+ProposeBlock(slot, v) ==
+  /\ pendingBlock[slot] = "NULL"
+  /\ pendingBlock' = [pendingBlock EXCEPT ![slot] = <<"Block", slot, v>>]
+  /\ UNCHANGED << votes, certs >>
 
 (************************************************************************)
 (* When many nodes have Notar votes, build certificates *)
@@ -95,6 +101,7 @@ CastFinalIfSeenNotarCert(slot, v) ==
 (* Next relation *)
 (************************************************************************)
 Next ==
+  \/ \E slot \in Slots, v \in Nodes : ProposeBlock(slot, v)
   \/ \E slot \in Slots, v \in Nodes : CastNotar(slot, v)
   \/ \E slot \in Slots, v \in Nodes : CastFinalIfSeenNotarCert(slot, v)
   \/ \E slot \in Slots : BuildCerts(slot)
@@ -102,6 +109,3 @@ Next ==
 Spec == Init /\ [][Next]_<<votes, certs, pendingBlock>>
 
 =============================================================================
-\* Modification History
-\* Last modified Sun Sep 28 12:47:22 IST 2025 by Shanmukha
-\* Created Sun Sep 28 12:19:47 IST 2025 by Shanmukha
